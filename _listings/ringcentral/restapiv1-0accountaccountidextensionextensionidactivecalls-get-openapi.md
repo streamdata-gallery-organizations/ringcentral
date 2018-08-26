@@ -1,0 +1,237 @@
+---
+swagger: "2.0"
+x-collection-name: RingCentral
+x-complete: 0
+info:
+  title: RingCentral Get User Active Calls
+  description: "Returns records of all extension calls that are in progress, ordered
+    by start time in descending order.\nApp Permission\nReadCallLog\nUser Permission\nReadCallLog\nUsage
+    Plan Group\nHeavy\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+    Message\n   \n \n\n400\nCMN-101\nParameter [direction] value is invalid\n\n\n401\nCMN-405\nLogin
+    to extension required\n\n\n401\nOAU-151\nAuthorization method not supported\n\n\n403\nCMN-401\nIn
+    order to call this API endpoint, application needs to have [ReadCallLog] permission\n\n\n403\nCMN-408\nIn
+    order to call this API endpoint, user needs to have [ReadCallLog] permission for
+    requested resource.\n\n\n404\nCMN-102\nResource for parameter [accountId] is not
+    found"
+  version: 1.0.0
+host: platform.ringcentral.com
+basePath: /
+schemes:
+- http
+produces:
+- application/json
+consumes:
+- application/json
+paths:
+  /restapi/:
+    get:
+      summary: Get API Versions
+      description: |-
+        Returns current API version(s) and server info.
+        Usage Plan Group
+        NoThrottling
+      operationId: getAllVersions
+      x-api-path-slug: restapi-get
+      responses:
+        200:
+          description: OK
+      tags:
+      - Versions
+  /restapi/{apiVersion}:
+    get:
+      summary: Get Version Info
+      description: |-
+        Returns current API version info by apiVersion.
+        Usage Plan Group
+        NoThrottling
+      operationId: getApiVersion
+      x-api-path-slug: restapiapiversion-get
+      parameters:
+      - in: path
+        name: apiVersion
+        description: API version to be requested, for example v1
+      responses:
+        200:
+          description: OK
+      tags:
+      - Version
+      - Info
+  /restapi/v1.0/status:
+    get:
+      summary: Get Service status
+      description: |-
+        Returns current PAS service status.
+        Usage Plan Group
+        NoThrottling
+      operationId: loadAPIStatus
+      x-api-path-slug: restapiv1-0status-get
+      responses:
+        200:
+          description: OK
+      tags:
+      - Service
+      - Status
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/call-log:
+    get:
+      summary: Get Call Log Records by Filter
+      description: "Returns call log records filtered by parameters specified.\nApp
+        Permission\nReadCallLog\nUser Permission\nReadCallLog\nUsage Plan Group\nHeavy\nError
+        Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error Message\n   \n \n\n400\nCLG-110\nParameter
+        [sessionId] is not allowed for usage along with parameter [extensionNumber]\n\n\n400\nCMN-101\nParameter
+        [transport] value is invalid\n\n\n401\nCMN-405\nLogin to extension required\n\n\n401\nOAU-129\nAccess
+        token corrupted\n\n\n401\nOAU-151\nAuthorization method not supported\n\n\n401\nOAU-213\nToken
+        not found\n\n\n403\nCMN-401\nIn order to call this API endpoint, application
+        needs to have [ReadCallLog] permission\n\n\n403\nCMN-408\nIn order to call
+        this API endpoint, user needs to have [ReadCallLog] permission for requested
+        resource.\n\n\n404\nCMN-102\nResource for parameter [extensionId] is not found\n\n\n429\nCMN-301\nRequest
+        rate exceeded"
+      operationId: loadExtensionCallLog
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidcalllog-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: query
+        name: dateFrom
+        description: The start datetime for resulting records in ISO 8601 format including
+          timezone, for example 2016-03-10T18:07:52
+      - in: query
+        name: dateTo
+        description: The end datetime for resulting records in ISO 8601 format including
+          timezone, for example 2016-03-10T18:07:52
+      - in: query
+        name: direction
+        description: The direction for the resulting records
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      - in: query
+        name: extensionNumber
+        description: Extension number of a user
+      - in: query
+        name: page
+        description: Indicates the page number to retrieve
+      - in: query
+        name: perPage
+        description: Indicates the page size (number of items)
+      - in: query
+        name: phoneNumber
+        description: Phone number of a caller/callee
+      - in: query
+        name: sessionId
+      - in: query
+        name: showBlocked
+        description: If True then calls from/to blocked numbers are returned
+      - in: query
+        name: transport
+        description: Call transport type
+      - in: query
+        name: type
+        description: Call type of a record
+      - in: query
+        name: view
+        description: The default value is Simple for both account and extension call
+          log
+      - in: query
+        name: withRecording
+        description: True should be specified to return recorded calls only
+      responses:
+        200:
+          description: OK
+      tags:
+      - Call
+      - Log
+      - Records
+      - By
+      - Filter
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/call-log/{callRecordId}:
+    get:
+      summary: Get Call Records by ID
+      description: "Returns filtered call log records.\nApp Permission\nReadCallLog\nUser
+        Permission\nReadCallLog\nUsage Plan Group\nHeavy\nError Codes\n\n \n  \n   HTTP
+        Code\n   Error Code\n   Error Message\n   \n \n\n403\nCMN-401\nIn order to
+        call this API endpoint, application needs to have [ReadCallLog] permission\n\n\n403\nCMN-408\nIn
+        order to call this API endpoint, user needs to have [ReadCallLog] permission
+        for requested resource.\n\n\n404\nCMN-102\nResource for parameter [extensionId]
+        is not found"
+      operationId: getCallRecords
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidcalllogcallrecordid-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: path
+        name: callRecordId
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      - in: query
+        name: view
+      responses:
+        200:
+          description: OK
+      tags:
+      - Call
+      - Records
+      - By
+      - ID
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/active-calls:
+    get:
+      summary: Get User Active Calls
+      description: "Returns records of all extension calls that are in progress, ordered
+        by start time in descending order.\nApp Permission\nReadCallLog\nUser Permission\nReadCallLog\nUsage
+        Plan Group\nHeavy\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n400\nCMN-101\nParameter [direction] value is invalid\n\n\n401\nCMN-405\nLogin
+        to extension required\n\n\n401\nOAU-151\nAuthorization method not supported\n\n\n403\nCMN-401\nIn
+        order to call this API endpoint, application needs to have [ReadCallLog] permission\n\n\n403\nCMN-408\nIn
+        order to call this API endpoint, user needs to have [ReadCallLog] permission
+        for requested resource.\n\n\n404\nCMN-102\nResource for parameter [accountId]
+        is not found"
+      operationId: listExtensionActiveCalls
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidactivecalls-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: query
+        name: direction
+        description: The direction for the result records
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      - in: query
+        name: page
+        description: Indicates the page number to retrieve
+      - in: query
+        name: perPage
+        description: Indicates the page size (number of items)
+      - in: query
+        name: type
+        description: Call type of a record
+      responses:
+        200:
+          description: OK
+      tags:
+      - User
+      - Active
+      - Calls
+x-streamrank:
+  polling_total_time_average: 0
+  polling_size_download_average: 0
+  streaming_total_time_average: 0
+  streaming_size_download_average: 0
+  change_yes: 0
+  change_no: 0
+  time_percentage: 0
+  size_percentage: 0
+  change_percentage: 0
+  last_run: ""
+  days_run: 0
+  minute_run: 0
+---
