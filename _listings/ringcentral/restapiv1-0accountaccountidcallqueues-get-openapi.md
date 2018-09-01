@@ -1,9 +1,17 @@
+---
 swagger: "2.0"
 x-collection-name: RingCentral
-x-complete: 1
+x-complete: 0
 info:
-  title: RingCentral Connect Platform API Explorer
-  description: this-is-an-interactive-api-explorer-for-the-ringcentral-connect-platform--to-use-this-service-you-will-need-to-have-a-developer-account---links--a-hrefhttpsnetstorage-ringcentral-comdpwapiexplorerrcplatform-basic-ymlv20180514092722-target-blankringcentral-api-specaspannbspnbspopenapi-fka-swagger-formatnbspnbspnbspnbspspana-hrefhttpsgithub-comoaiopenapispecification-target-blanklearn-more-about-openapia
+  title: RingCentral Get Call Queues
+  description: |-
+    Returns call queue group list
+    App Permission
+    ReadAccounts
+    User Permission
+    ReadExtensions
+    Usage Plan Group
+    Medium
   version: 1.0.0
 host: platform.ringcentral.com
 basePath: /
@@ -4402,283 +4410,17 @@ paths:
       tags:
       - Call
       - Queues
-  /restapi/v1.0/account/{accountId}/call-queues/{groupId}/members:
-    get:
-      summary: Get Call Queue Members
-      description: |-
-        Returns call queue group members.
-        App Permission
-        ReadAccounts
-        User Permission
-        ReadExtensions
-        Usage Plan Group
-        Light
-      operationId: listCallQueueMembers
-      x-api-path-slug: restapiv1-0accountaccountidcallqueuesgroupidmembers-get
-      parameters:
-      - in: path
-        name: accountId
-      - in: path
-        name: groupId
-      - in: query
-        name: page
-        description: Indicates the page number to retrieve
-      - in: query
-        name: perPage
-        description: Indicates the page size (number of items)
-      responses:
-        200:
-          description: OK
-      tags:
-      - Call
-      - Queue
-      - Members
-  /restapi/v1.0/account/{accountId}/call-queues/{groupId}/bulk-assign:
-    post:
-      summary: Edit Call Queue Group
-      description: "Updates call queue group.\nApp Permission\nEditExtensions\nUser
-        Permission\nGroups\nUsage Plan Group\nHeavy\nError Codes\n\n \n  \n   HTTP
-        Code\n   Error Code\n   Error Message\n   \n \n\n400\nEXT-405\nExtension of
-        type [ParkLocation] could not be a member of [department}]"
-      operationId: updateCallQueueGroup
-      x-api-path-slug: restapiv1-0accountaccountidcallqueuesgroupidbulkassign-post
-      parameters:
-      - in: path
-        name: accountId
-      - in: body
-        name: body
-        description: Changes for the given group
-        schema:
-          $ref: '#/definitions/holder'
-      - in: path
-        name: groupId
-      responses:
-        200:
-          description: OK
-      tags:
-      - Edit
-      - Call
-      - Queue
-      - Group
-  /restapi/v1.0/account/{accountId}/call-monitoring-groups:
-    get:
-      summary: Get Call Monitoring Groups
-      description: |-
-        Returns call monitoring groups that can be filtered by some extension.
-        App Permission
-        ReadAccounts
-        User Permission
-        ReadExtensions
-        Usage Plan Group
-        Medium
-      operationId: listCallMonitoringGroups
-      x-api-path-slug: restapiv1-0accountaccountidcallmonitoringgroups-get
-      parameters:
-      - in: path
-        name: accountId
-      - in: query
-        name: memberExtensionId
-        description: Internal identifier of an extension that is a member of every
-          group within the result
-      - in: query
-        name: page
-        description: Indicates the page number to retrieve
-      - in: query
-        name: perPage
-        description: Indicates the page size (number of items)
-      responses:
-        200:
-          description: OK
-      tags:
-      - Call
-      - Monitoring
-      - Groups
-  /restapi/v1.0/account/{accountId}/call-monitoring-groups/{groupId}/members:
-    get:
-      summary: Get Call Monitoring Group Members
-      description: |-
-        Returns call monitoring group members.
-        App Permission
-        ReadAccounts
-        User Permission
-        ReadExtensions
-        Usage Plan Group
-        Medium
-      operationId: listCallMonitoringGroupMembers
-      x-api-path-slug: restapiv1-0accountaccountidcallmonitoringgroupsgroupidmembers-get
-      parameters:
-      - in: path
-        name: accountId
-      - in: path
-        name: groupId
-      - in: query
-        name: page
-        description: Indicates the page number to retrieve
-      - in: query
-        name: perPage
-        description: Indicates the page size (number of items)
-      responses:
-        200:
-          description: OK
-      tags:
-      - Call
-      - Monitoring
-      - Group
-      - Members
-  /restapi/v1.0/number-parser/parse:
-    post:
-      summary: Parse Phone Number [Beta]
-      description: "Returns one or more parsed and/or formatted phone numbers that
-        are passed as a string.\nUsage Plan Group\nLight\nError Codes\n\n \n  \n   HTTP
-        Code\n   Error Code\n   Error Message\n   \n \n\n400\nCMN-101\nParameter [nationalAsPriority]
-        value is invalid"
-      operationId: parsePhoneNumber
-      x-api-path-slug: restapiv1-0numberparserparse-post
-      parameters:
-      - in: body
-        name: body
-        description: JSON body
-        schema:
-          $ref: '#/definitions/holder'
-      - in: query
-        name: homeCountry
-        description: Internal identifier of a home country
-      - in: query
-        name: nationalAsPriority
-        description: The default value is False
-      responses:
-        200:
-          description: OK
-      tags:
-      - Parse
-      - Phone
-      - Number
-      - '[Beta]'
-  /scim/v2/ServiceProviderConfig:
-    get:
-      summary: get service provider config
-      description: ""
-      operationId: getServiceProviderConfig
-      x-api-path-slug: scimv2serviceproviderconfig-get
-      responses:
-        200:
-          description: OK
-      tags:
-      - Get
-      - Service
-      - Provider
-      - Config
-  /scim/v2/Users:
-    get:
-      summary: search or list users
-      description: ""
-      operationId: searchViaGet
-      x-api-path-slug: scimv2users-get
-      parameters:
-      - in: query
-        name: count
-        description: page size
-      - in: query
-        name: filter
-        description: only support userName or email filter expressions for now
-      - in: query
-        name: startIndex
-        description: start index (1-based)
-      responses:
-        200:
-          description: OK
-      tags:
-      - Search
-      - List
-      - Users
-    post:
-      summary: create a user
-      description: ""
-      operationId: createUser
-      x-api-path-slug: scimv2users-post
-      parameters:
-      - in: body
-        name: body
-        description: a new user without id
-        schema:
-          $ref: '#/definitions/holder'
-      responses:
-        200:
-          description: OK
-      tags:
-      - Create
-      - User
-  /scim/v2/Users/.search:
-    post:
-      summary: search or list users
-      description: ""
-      operationId: searchViaPost
-      x-api-path-slug: scimv2users-search-post
-      parameters:
-      - in: body
-        name: body
-        description: search parameters
-        schema:
-          $ref: '#/definitions/holder'
-      responses:
-        200:
-          description: OK
-      tags:
-      - Search
-      - List
-      - Users
-  /scim/v2/Users/{id}:
-    get:
-      summary: get a user by id
-      description: ""
-      operationId: getUserById
-      x-api-path-slug: scimv2usersid-get
-      parameters:
-      - in: path
-        name: id
-        description: user id
-      responses:
-        200:
-          description: OK
-      tags:
-      - Get
-      - User
-      - By
-      - Id
-    put:
-      summary: fully update/replace a user
-      description: ""
-      operationId: replaceUser
-      x-api-path-slug: scimv2usersid-put
-      parameters:
-      - in: body
-        name: body
-        description: an existing user
-        schema:
-          $ref: '#/definitions/holder'
-      - in: path
-        name: id
-        description: user id
-      responses:
-        200:
-          description: OK
-      tags:
-      - Fully
-      - Update
-      - Replace
-      - User
-    delete:
-      summary: delete a user
-      description: ""
-      operationId: deleteUser
-      x-api-path-slug: scimv2usersid-delete
-      parameters:
-      - in: path
-        name: id
-        description: user id
-      responses:
-        200:
-          description: OK
-      tags:
-      - Delete
-      - User
+x-streamrank:
+  polling_total_time_average: 0
+  polling_size_download_average: 0
+  streaming_total_time_average: 0
+  streaming_size_download_average: 0
+  change_yes: 0
+  change_no: 0
+  time_percentage: 0
+  size_percentage: 0
+  change_percentage: 0
+  last_run: ""
+  days_run: 0
+  minute_run: 0
+---

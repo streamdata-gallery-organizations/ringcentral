@@ -1,0 +1,1326 @@
+---
+swagger: "2.0"
+x-collection-name: RingCentral
+x-complete: 0
+info:
+  title: RingCentral Get Corporate Directory Contact
+  description: |-
+    Returns contact information on a particular corporate user of a federated account.
+    App Permission
+    ReadAccounts
+    Usage Plan Group
+    Medium
+  version: 1.0.0
+host: platform.ringcentral.com
+basePath: /
+schemes:
+- http
+produces:
+- application/json
+consumes:
+- application/json
+paths:
+  /restapi/:
+    get:
+      summary: Get API Versions
+      description: |-
+        Returns current API version(s) and server info.
+        Usage Plan Group
+        NoThrottling
+      operationId: getAllVersions
+      x-api-path-slug: restapi-get
+      responses:
+        200:
+          description: OK
+      tags:
+      - Versions
+  /restapi/{apiVersion}:
+    get:
+      summary: Get Version Info
+      description: |-
+        Returns current API version info by apiVersion.
+        Usage Plan Group
+        NoThrottling
+      operationId: getApiVersion
+      x-api-path-slug: restapiapiversion-get
+      parameters:
+      - in: path
+        name: apiVersion
+        description: API version to be requested, for example v1
+      responses:
+        200:
+          description: OK
+      tags:
+      - Version
+      - Info
+  /restapi/v1.0/status:
+    get:
+      summary: Get Service status
+      description: |-
+        Returns current PAS service status.
+        Usage Plan Group
+        NoThrottling
+      operationId: loadAPIStatus
+      x-api-path-slug: restapiv1-0status-get
+      responses:
+        200:
+          description: OK
+      tags:
+      - Service
+      - Status
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/call-log:
+    get:
+      summary: Get Call Log Records by Filter
+      description: "Returns call log records filtered by parameters specified.\nApp
+        Permission\nReadCallLog\nUser Permission\nReadCallLog\nUsage Plan Group\nHeavy\nError
+        Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error Message\n   \n \n\n400\nCLG-110\nParameter
+        [sessionId] is not allowed for usage along with parameter [extensionNumber]\n\n\n400\nCMN-101\nParameter
+        [transport] value is invalid\n\n\n401\nCMN-405\nLogin to extension required\n\n\n401\nOAU-129\nAccess
+        token corrupted\n\n\n401\nOAU-151\nAuthorization method not supported\n\n\n401\nOAU-213\nToken
+        not found\n\n\n403\nCMN-401\nIn order to call this API endpoint, application
+        needs to have [ReadCallLog] permission\n\n\n403\nCMN-408\nIn order to call
+        this API endpoint, user needs to have [ReadCallLog] permission for requested
+        resource.\n\n\n404\nCMN-102\nResource for parameter [extensionId] is not found\n\n\n429\nCMN-301\nRequest
+        rate exceeded"
+      operationId: loadExtensionCallLog
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidcalllog-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: query
+        name: dateFrom
+        description: The start datetime for resulting records in ISO 8601 format including
+          timezone, for example 2016-03-10T18:07:52
+      - in: query
+        name: dateTo
+        description: The end datetime for resulting records in ISO 8601 format including
+          timezone, for example 2016-03-10T18:07:52
+      - in: query
+        name: direction
+        description: The direction for the resulting records
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      - in: query
+        name: extensionNumber
+        description: Extension number of a user
+      - in: query
+        name: page
+        description: Indicates the page number to retrieve
+      - in: query
+        name: perPage
+        description: Indicates the page size (number of items)
+      - in: query
+        name: phoneNumber
+        description: Phone number of a caller/callee
+      - in: query
+        name: sessionId
+      - in: query
+        name: showBlocked
+        description: If True then calls from/to blocked numbers are returned
+      - in: query
+        name: transport
+        description: Call transport type
+      - in: query
+        name: type
+        description: Call type of a record
+      - in: query
+        name: view
+        description: The default value is Simple for both account and extension call
+          log
+      - in: query
+        name: withRecording
+        description: True should be specified to return recorded calls only
+      responses:
+        200:
+          description: OK
+      tags:
+      - Call
+      - Log
+      - Records
+      - By
+      - Filter
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/call-log/{callRecordId}:
+    get:
+      summary: Get Call Records by ID
+      description: "Returns filtered call log records.\nApp Permission\nReadCallLog\nUser
+        Permission\nReadCallLog\nUsage Plan Group\nHeavy\nError Codes\n\n \n  \n   HTTP
+        Code\n   Error Code\n   Error Message\n   \n \n\n403\nCMN-401\nIn order to
+        call this API endpoint, application needs to have [ReadCallLog] permission\n\n\n403\nCMN-408\nIn
+        order to call this API endpoint, user needs to have [ReadCallLog] permission
+        for requested resource.\n\n\n404\nCMN-102\nResource for parameter [extensionId]
+        is not found"
+      operationId: getCallRecords
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidcalllogcallrecordid-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: path
+        name: callRecordId
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      - in: query
+        name: view
+      responses:
+        200:
+          description: OK
+      tags:
+      - Call
+      - Records
+      - By
+      - ID
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/active-calls:
+    get:
+      summary: Get User Active Calls
+      description: "Returns records of all extension calls that are in progress, ordered
+        by start time in descending order.\nApp Permission\nReadCallLog\nUser Permission\nReadCallLog\nUsage
+        Plan Group\nHeavy\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n400\nCMN-101\nParameter [direction] value is invalid\n\n\n401\nCMN-405\nLogin
+        to extension required\n\n\n401\nOAU-151\nAuthorization method not supported\n\n\n403\nCMN-401\nIn
+        order to call this API endpoint, application needs to have [ReadCallLog] permission\n\n\n403\nCMN-408\nIn
+        order to call this API endpoint, user needs to have [ReadCallLog] permission
+        for requested resource.\n\n\n404\nCMN-102\nResource for parameter [accountId]
+        is not found"
+      operationId: listExtensionActiveCalls
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidactivecalls-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: query
+        name: direction
+        description: The direction for the result records
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      - in: query
+        name: page
+        description: Indicates the page number to retrieve
+      - in: query
+        name: perPage
+        description: Indicates the page size (number of items)
+      - in: query
+        name: type
+        description: Call type of a record
+      responses:
+        200:
+          description: OK
+      tags:
+      - User
+      - Active
+      - Calls
+  /restapi/v1.0/account/{accountId}/call-log:
+    get:
+      summary: Get Call Log Records by Filter
+      description: "Returns call log records filtered by parameters specified.\nApp
+        Permission\nReadCallLog\nUser Permission\nFullCompanyCallLog\nUsage Plan Group\nHeavy\nError
+        Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error Message\n   \n \n\n400\nCLG-110\nParameter
+        [sessionId] is not allowed for usage along with parameter [extensionNumber]\n\n\n400\nCMN-101\nParameter
+        [dateFrom] value is invalid\n\n\n401\nCMN-405\nLogin to extension required\n\n\n401\nOAU-151\nAuthorization
+        method not supported\n\n\n403\nCMN-401\nIn order to call this API endpoint,
+        application needs to have [ReadCallLog] permission\n\n\n403\nCMN-408\nIn order
+        to call this API endpoint, user needs to have [ReadCompanyCallLog] permission
+        for requested resource.\n\n\n404\nCMN-102\nResource for parameter [accountId]
+        is not found"
+      operationId: loadAccountCallLog
+      x-api-path-slug: restapiv1-0accountaccountidcalllog-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: query
+        name: dateFrom
+        description: The start datetime for resulting records in ISO 8601 format including
+          timezone, for example 2016-03-10T18:07:52
+      - in: query
+        name: dateTo
+        description: The end datetime for resulting records in ISO 8601 format including
+          timezone, for example 2016-03-10T18:07:52
+      - in: query
+        name: direction
+        description: The direction for the result records
+      - in: query
+        name: extensionNumber
+        description: Extension number of a user
+      - in: query
+        name: page
+        description: Indicates the page number to retrieve
+      - in: query
+        name: perPage
+        description: Indicates the page size (number of items)
+      - in: query
+        name: phoneNumber
+        description: Phone number of a caller/call recipient
+      - in: query
+        name: sessionId
+      - in: query
+        name: type
+        description: Call type of a record
+      - in: query
+        name: view
+        description: The default value is Simple for both account and extension call
+          log
+      - in: query
+        name: withRecording
+        description: True if only recorded calls have to be returned
+      responses:
+        200:
+          description: OK
+      tags:
+      - Call
+      - Log
+      - Records
+      - By
+      - Filter
+  /restapi/v1.0/account/{accountId}/recording/{recordingId}:
+    get:
+      summary: Get Call Recordings
+      description: "Returns call recording metadata by ID.\nApp Permission\nReadCallRecording\nUser
+        Permission\nReadCallRecording\nUsage Plan Group\nHeavy\nError Codes\n\n \n
+        \ \n   HTTP Code\n   Error Code\n   Error Message\n   \n \n\n401\nCMN-405\nLogin
+        to extension required\n\n\n401\nOAU-151\nAuthorization method not supported\n\n\n403\nCMN-401\nIn
+        order to call this API endpoint, application needs to have [ReadCallRecording]
+        permission\n\n\n404\nCMN-102\nResource for parameter [accountId] is not found"
+      operationId: listCallRecordings
+      x-api-path-slug: restapiv1-0accountaccountidrecordingrecordingid-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: path
+        name: recordingId
+        description: Internal identifier of a recording (returned in Call Log)
+      responses:
+        200:
+          description: OK
+      tags:
+      - Call
+      - Recordings
+  /restapi/v1.0/account/{accountId}/recording/{recordingId}/content:
+    get:
+      summary: Get Call Recordings Data
+      description: "Returns media content of a call recording.\nApp Permission\nReadCallRecording\nUser
+        Permission\nReadCallRecording\nUsage Plan Group\nHeavy\nError Codes\n\n \n
+        \ \n   HTTP Code\n   Error Code\n   Error Message\n   \n \n\n401\nAGW-402\nInvalid
+        Authorization header\n\n\n401\nCMN-405\nLogin to extension required\n\n\n401\nOAU-149\nUnparsable
+        access token\n\n\n401\nOAU-151\nAuthorization method not supported\n\n\n403\nCMN-401\nIn
+        order to call this API endpoint, application needs to have [ReadCallRecording]
+        permission\n\n\n404\nCMN-102\nResource for parameter [accountId] is not found\n\n\n416\nCMN-107\nRequested
+        range not satisfiable"
+      operationId: listCallRecordingData
+      x-api-path-slug: restapiv1-0accountaccountidrecordingrecordingidcontent-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: path
+        name: recordingId
+        description: Internal identifier of a recording (returned in Call Log)
+      responses:
+        200:
+          description: OK
+      tags:
+      - Call
+      - Recordings
+      - Data
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/sms:
+    post:
+      summary: Create SMS Message
+      description: "Creates and sends new SMS message. Sending SMS messages simultaneously
+        to different recipients is limited up to 50 requests per minute; relevant
+        for all client applications.\nApp Permission\nSMS\nUser Permission\nOutboundSMS\nUsage
+        Plan Group\nMedium\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n400\nCMN-101\nParameter [] value is invalid\n\n\n400\nCMN-406\nDuplicate
+        value for parameter to: +13476733173 found in request\n\n\n400\nMSG-243\nParameter
+        [to] value [18882049692] is invalid [Phone number is blocked]\n\n\n400\nMSG-245\nParameter
+        [from] value [88121002330] is invalid [Cannot find the phone number which
+        belongs to user]\n\n\n400\nMSG-246\nSending SMS from/to extension numbers
+        is not available\n\n\n400\nMSG-247\nSending SMS to short numbers is not available\n\n\n400\nMSG-365\nParameters
+        [country.id] and [country.isoCode] can not be specified simultaneously\n\n\n400\nMSG-376\nAttachment
+        size limit exceeded\n\n\n400\nMSG-379\nToo many attachments\n\n\n400\nMSG-381\nExceeded
+        maximum number of recipients for a Group MMS: [10]\n\n\n403\nBIL-103\nFeature
+        [MMS] is not available for current account\n\n\n403\nCMN-401\nIn order to
+        call this API endpoint, application needs to have [SMS] permission\n\n\n403\nCMN-408\nIn
+        order to call this API endpoint, user needs to have [OutboundSMS] permission
+        for requested resource.\n\n\n403\nMSG-240\nInternational SMS is not available
+        for account.\n\n\n403\nMSG-241\nCannot send SMS from Fax number\n\n\n403\nMSG-242\nThe
+        requested feature is not available\n\n\n403\nMSG-314\nExtension is of inappropriate
+        type\n\n\n403\nMSG-367\n\"from\" phone number does not support SMS\n\n\n403\nMSG-383\nInternational
+        MMS feature is not available\n\n\n403\nMSG-384\nAccount limits exceeded. Cannot
+        send the message.\n\n\n403\nMSG-388\nThe destination is prohibited\n\n\n404\nCMN-102\nResource
+        for parameter [accountId] is not found\n\n\n415\nMSG-348\nUnsupported attachment
+        media type, attachment [3]: [stuff.smil]"
+      operationId: sendSMS
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidsms-post
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: body
+        name: body
+        description: JSON body
+        schema:
+          $ref: '#/definitions/holder'
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      responses:
+        200:
+          description: OK
+      tags:
+      - SMS
+      - Message
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/company-pager:
+    post:
+      summary: Create Pager Message
+      description: "Creates and sends a pager message.\nApp Permission\nInternalMessages\nUser
+        Permission\nInternalSMS\nUsage Plan Group\nMedium\nError Codes\n\n \n  \n
+        \  HTTP Code\n   Error Code\n   Error Message\n   \n \n\n400\nCMN-101\nParameter
+        [to.phoneNumber] value is invalid\n\n\n400\nCMN-102\nResource for parameter
+        [to] is not found\n\n\n400\nMSG-316\nParameter [to] value [102] is invalid
+        [Target extension not found]\n\n\n400\nMSG-324\nExtension is of unappropriate
+        state\n\n\n400\nMSG-331\nParameter [from] value [11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111]
+        is invalid [Sender extension number does not correspond to logged in extension]\n\n\n400\nMSG-332\nParameter
+        [from] value [404544780008] is invalid [Sender extension id does not correspond
+        to logged in extension]\n\n\n400\nMSG-335\nRecipient extension number does
+        not correspond to ID\n\n\n403\nCMN-401\nIn order to call this API endpoint,
+        application needs to have [InternalMessages] permission\n\n\n403\nCMN-408\nIn
+        order to call this API endpoint, user needs to have [InternalSMS] permission
+        for requested resource.\n\n\n403\nMSG-325\nReply is forbidden for old message
+        threads\n\n\n403\nMSG-326\nReply is denied for user, who is no longer a thread
+        participant\n\n\n403\nMSG-330\nSender extension is of unappropriate type\n\n\n404\nCMN-102\nResource
+        for parameter [extensionId] is not found"
+      operationId: sendInternalMessage
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidcompanypager-post
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: body
+        name: body
+        description: JSON body
+        schema:
+          $ref: '#/definitions/holder'
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      responses:
+        200:
+          description: OK
+      tags:
+      - Pager
+      - Message
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/fax:
+    post:
+      summary: Create Fax Message
+      description: "Creates and sends/resends new fax message. Resend can be done
+        if sending failed.\nApp Permission\nFaxes\nUser Permission\nOutboundFaxes\nUsage
+        Plan Group\nHeavy\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n400\nCMN-101\nParameter [to] value is invalid\n\n\n400\nMSG-344\nSending
+        fax to extension numbers is not available\n\n\n400\nMSG-347\nAttachment [t.txt]
+        body is empty\n\n\n400\nMSG-355\nFor binary data filename with extension should
+        be specified, attachment [1]: []\n\n\n400\nMSG-356\nEither filename or content
+        type should be specified, attachment [1]: []\n\n\n400\nMSG-365\nParameters
+        [country.id] and [country.isoCode] can not be specified simultaneously\n\n\n400\nMSG-370\nfilename
+        is too long, 256 characters allowed\n\n\n403\nCMN-401\nIn order to call this
+        API endpoint, application needs to have [Faxes] permission\n\n\n403\nCMN-408\nIn
+        order to call this API endpoint, user needs to have [OutboundFaxes] permission
+        for requested resource.\n\n\n404\nCMN-102\nResource for parameter [extensionId]
+        is not found\n\n\n415\nMSG-348\nUnsupported attachment media type, attachment
+        [1]: [.jfif]\n\n\n415\nMSG-353\nNo file extension or content type specified,
+        attachment [1]: [filename,txt]"
+      operationId: sendFaxMessage
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidfax-post
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account (integer) or tilde
+          (~) to indicate the account which was logged-in within the current session
+      - in: formData
+        name: attachment
+        description: File to upload
+      - in: formData
+        name: coverIndex
+        description: Cover page identifier
+      - in: formData
+        name: coverPageText
+        description: Cover page text, entered by the fax sender and printed on the
+          cover page
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension (integer) or tilde (~) to
+          indicate the extension assigned to the account logged-in within the current
+          session
+      - in: formData
+        name: faxResolution
+        description: Resolution of Fax
+      - in: formData
+        name: isoCode
+        description: ISO Code
+      - in: formData
+        name: sendTime
+        description: Timestamp to send fax at
+      - in: formData
+        name: to
+        description: To Phone Number
+      responses:
+        200:
+          description: OK
+      tags:
+      - Fax
+      - Message
+  /restapi/v1.0/dictionary/fax-cover-page:
+    get:
+      summary: Get Available Fax Cover Pages
+      description: "Returns fax cover pages available for the current extension.\nUsage
+        Plan Group\nLight\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n400\nCMN-101\nParameter [page] value is invalid\n\n\n401\nCMN-405\nLogin
+        to extension required"
+      operationId: listFaxCoverPages
+      x-api-path-slug: restapiv1-0dictionaryfaxcoverpage-get
+      parameters:
+      - in: query
+        name: page
+        description: Indicates the page number to retrieve
+      - in: query
+        name: perPage
+        description: Indicates the page size (number of items)
+      responses:
+        200:
+          description: OK
+      tags:
+      - Available
+      - Fax
+      - Cover
+      - Pages
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/message-store:
+    get:
+      summary: Get Message List
+      description: "Returns the list of messages from an extension mailbox.\nApp Permission\nReadMessages\nUser
+        Permission\nReadMessages\nUsage Plan Group\nLight\nError Codes\n\n \n  \n
+        \  HTTP Code\n   Error Code\n   Error Message\n   \n \n\n400\nCMN-101\nParameter
+        [readStatus] value is invalid\n\n\n401\nCMN-405\nLogin to extension required\n\n\n401\nOAU-151\nAuthorization
+        method not supported\n\n\n403\nCMN-401\nIn order to call this API endpoint,
+        application needs to have [ReadMessages] permission\n\n\n403\nCMN-408\nIn
+        order to call this API endpoint, user needs to have [ReadMessages] permission
+        for requested resource.\n\n\n404\nCMN-102\nResource for parameter [extensionId]
+        is not found"
+      operationId: listMessages
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidmessagestore-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: query
+        name: availability
+        description: Specifies the availability status for the resulting messages
+      - in: query
+        name: conversationId
+        description: Specifies the conversation identifier for the resulting messages
+      - in: query
+        name: dateFrom
+        description: The start datetime for resulting messages in ISO 8601 format
+          including timezone, for example 2016-03-10T18:07:52
+      - in: query
+        name: dateTo
+        description: The end datetime for resulting messages in ISO 8601 format including
+          timezone, for example 2016-03-10T18:07:52
+      - in: query
+        name: direction
+        description: The direction for the resulting messages
+      - in: query
+        name: distinctConversations
+        description: If True, then the latest messages per every conversation ID are
+          returned
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      - in: query
+        name: messageType
+        description: The type of the resulting messages
+      - in: query
+        name: page
+        description: Indicates the page number to retrieve
+      - in: query
+        name: perPage
+        description: Indicates the page size (number of items)
+      - in: query
+        name: phoneNumber
+        description: The phone number
+      - in: query
+        name: readStatus
+        description: The read status for the resulting messages
+      responses:
+        200:
+          description: OK
+      tags:
+      - Message
+      - List
+    delete:
+      summary: Delete Conversations by ID's
+      description: "Deletes conversation(s) by conversation ID(s). Batch request is
+        supported.\nApp Permission\nEditMessages\nUser Permission\nEditMessages\nUsage
+        Plan Group\nMedium\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n400\nCMN-101\nParameter [conversationId] value is invalid\n\n\n403\nCMN-401\nIn
+        order to call this API endpoint, application needs to have [EditMessages]
+        permission"
+      operationId: deleteMessagesByFilter
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidmessagestore-delete
+      parameters:
+      - in: path
+        name: accountId
+      - in: query
+        name: conversationId
+      - in: path
+        name: extensionId
+      responses:
+        200:
+          description: OK
+      tags:
+      - Conversations
+      - By
+      - IDs
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/message-store/{messageId}:
+    get:
+      summary: Get Message(s) by ID
+      description: "Returns individual message record(s) by the given message ID(s).
+        The length of inbound messages is unlimited. Batch request is supported.\nApp
+        Permission\nReadMessages\nUser Permission\nReadMessages\nUsage Plan Group\nLight\nError
+        Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error Message\n   \n \n\n401\nCMN-405\nLogin
+        to extension required\n\n\n401\nOAU-151\nAuthorization method not supported\n\n\n403\nCMN-401\nIn
+        order to call this API endpoint, application needs to have [ReadMessages]
+        permission\n\n\n403\nCMN-408\nIn order to call this API endpoint, user needs
+        to have [ReadMessages] permission for requested resource.\n\n\n404\nCMN-102\nResource
+        for parameter [extensionId] is not found"
+      operationId: loadMessage
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidmessagestoremessageid-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      - in: path
+        name: messageId
+        description: Internal identifier of a message
+      responses:
+        200:
+          description: OK
+      tags:
+      - Message(s)
+      - By
+      - ID
+    put:
+      summary: Update Message(s) by ID
+      description: "Updates message(s) by ID(s). Batch request is supported, see Batch
+        Requests for details. Currently, only the message read status updating is
+        supported.\nApp Permission\nEditMessages\nUser Permission\nEditMessages\nUsage
+        Plan Group\nMedium\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n400\nCMN-101\nParameter [] value is invalid\n\n\n403\nCMN-401\nIn
+        order to call this API endpoint, application needs to have [EditMessages]
+        permission\n\n\n403\nCMN-408\nIn order to call this API endpoint, user needs
+        to have [EditMessages] permission for requested resource.\n\n\n404\nCMN-102\nResource
+        for parameter [extensionId] is not found"
+      operationId: updateMessage
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidmessagestoremessageid-put
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: body
+        name: body
+        description: JSON body
+        schema:
+          $ref: '#/definitions/holder'
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      - in: path
+        name: messageId
+        description: Internal identifier of a message
+      responses:
+        200:
+          description: OK
+      tags:
+      - Message(s)
+      - By
+      - ID
+    delete:
+      summary: Delete Message(s) by ID
+      description: "Deletes message(s) by the given message ID(s). The first call
+        of this method transfers the message to the &#39;Delete&#39; status. The second
+        call transfers the deleted message to the &#39;Purged&#39; status. If it is
+        required to make the message &#39;Purged&#39; immediately (from the first
+        call), then set the query parameter purge to &#39;True&#39;.\nApp Permission\nEditMessages\nUser
+        Permission\nEditMessages\nUsage Plan Group\nMedium\nError Codes\n\n \n  \n
+        \  HTTP Code\n   Error Code\n   Error Message\n   \n \n\n400\nCMN-101\nParameter
+        [purge] value is invalid\n\n\n403\nCMN-401\nIn order to call this API endpoint,
+        application needs to have [EditMessages] permission\n\n\n403\nCMN-408\nIn
+        order to call this API endpoint, user needs to have [EditMessages] permission
+        for requested resource.\n\n\n404\nCMN-102\nResource for parameter [extensionId]
+        is not found"
+      operationId: deleteMessage
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidmessagestoremessageid-delete
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: query
+        name: conversationId
+        description: Internal identifier of a message thread
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      - in: path
+        name: messageId
+        description: Internal identifier of a message
+      - in: query
+        name: purge
+        description: If the value is True, then the message is purged immediately
+          with all the attachments
+      responses:
+        200:
+          description: OK
+      tags:
+      - Message(s)
+      - By
+      - ID
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/message-store/{messageId}/content/{attachmentId}:
+    get:
+      summary: Get Message Attachment
+      description: "Returns a specific message attachment data as a media stream.\nApp
+        Permission\nReadMessages\nUser Permission\nReadMessageContent\nUsage Plan
+        Group\nMedium\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n401\nAGW-402\nInvalid Authorization header\n\n\n401\nCMN-405\nLogin
+        to extension required\n\n\n401\nOAU-149\nUnparsable access token\n\n\n401\nOAU-151\nAuthorization
+        method not supported\n\n\n403\nCMN-401\nIn order to call this API endpoint,
+        application needs to have [ReadMessages] permission\n\n\n403\nCMN-408\nIn
+        order to call this API endpoint, user needs to have [ReadMessageContent] permission
+        for requested resource.\n\n\n404\nCMN-102\nResource for parameter [extensionId]
+        is not found\n\n\n416\nCMN-107\nRequested range not satisfiable"
+      operationId: preturns-a-specific-message-attachment-data-as-a-media-streamph4app-permissionh4preadmessagesph4user
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidmessagestoremessageidcontentattachmentid-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: path
+        name: attachmentId
+        description: Internal identifier of a message attachment
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      - in: path
+        name: messageId
+        description: Internal identifier of a message
+      - in: header
+        name: Range
+      responses:
+        200:
+          description: OK
+      tags:
+      - Message
+      - Attachment
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/message-sync:
+    get:
+      summary: Get Message Sync
+      description: "Synchronizes messages.\nApp Permission\nReadMessages\nUser Permission\nReadMessages\nUsage
+        Plan Group\nLight\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n400\nCMN-101\nParameter [messageType] value is invalid\n\n\n400\nMSG-333\nParameter
+        [syncToken] is invalid\n\n\n403\nCMN-401\nIn order to call this API endpoint,
+        application needs to have [ReadMessages] permission\n\n\n403\nCMN-408\nIn
+        order to call this API endpoint, user needs to have [ReadMessages] permission
+        for requested resource.\n\n\n404\nCMN-102\nResource for parameter [extensionId]
+        is not found"
+      operationId: syncMessages
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidmessagesync-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: query
+        name: conversationId
+        description: Conversation identifier for the resulting messages
+      - in: query
+        name: dateFrom
+        description: The start datetime for resulting messages in ISO 8601 format
+          including timezone, for example 2016-03-10T18:07:52
+      - in: query
+        name: dateTo
+        description: The end datetime for resulting messages in ISO 8601 format including
+          timezone, for example 2016-03-10T18:07:52
+      - in: query
+        name: direction
+        description: Direction for the resulting messages
+      - in: query
+        name: distinctConversations
+        description: If True, then the latest messages per every conversation ID are
+          returned
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      - in: query
+        name: messageType
+        description: Type for the resulting messages
+      - in: query
+        name: recordCount
+        description: Limits the number of records to be returned (works in combination
+          with dateFrom and dateTo if specified)
+      - in: query
+        name: syncToken
+        description: Value of syncToken property of last sync request response
+      - in: query
+        name: syncType
+        description: Type of message synchronization
+      responses:
+        200:
+          description: OK
+      tags:
+      - Message
+      - Sync
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/ring-out:
+    post:
+      summary: Make RingOut Call
+      description: "Makes a 2-leg RingOut call.\nApp Permission\nRingOut\nUsage Plan
+        Group\nHeavy\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n400\nCMN-101\nParameter [phoneNumber] value is invalid\n\n\n400\nTEL-107\nCaller
+        ID: [+18609411729] is not allowed\n\n\n400\nTEL-108\nphoneNumber specified
+        in the from field is empty or invalid\n\n\n400\nTEL-109\nphoneNumber specified
+        in the to field is empty or invalid\n\n\n403\nBIL-103\nFeature [RingOut] is
+        not available for current account\n\n\n403\nCMN-112\nFeature [RingOut] is
+        not available for current extension type\n\n\n403\nCMN-113\nFeature [DomesticCalls]
+        is not available for current extension\n\n\n403\nRNG-102\nCaller ID should
+        be one of company direct numbers\n\n\n403\nTEL-101\nphoneNumber specified
+        in the to field: [17176704078] is in blocked list\n\n\n403\nTEL-102\nphoneNumber
+        specified in the from field: [17176704078] is in blocked list\n\n\n403\nTEL-107\nCaller
+        ID: [+12094441763] is not allowed\n\n\n404\nCMN-102\nResource for parameter
+        [forwardingNumberId] is not found"
+      operationId: makeRingOutCallNew
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidringout-post
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: body
+        name: body
+        description: JSON body
+        schema:
+          $ref: '#/definitions/holder'
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      responses:
+        200:
+          description: OK
+      tags:
+      - Make
+      - RingOut
+      - Call
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/ring-out/{ringoutId}:
+    get:
+      summary: Get Status of RingOut Call
+      description: "Returns the status of a 2-leg RingOut call.\nApp Permission\nRingOut\nUsage
+        Plan Group\nLight\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n503\nCMN-201\nService Temporary Unavailable"
+      operationId: getRingOutCallStatusNew
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidringoutringoutid-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      - in: path
+        name: ringoutId
+        description: Internal identifier of a RingOut call
+      responses:
+        200:
+          description: OK
+      tags:
+      - Status
+      - Of
+      - RingOut
+      - Call
+    delete:
+      summary: Cancel RingOut Call
+      description: "Cancels a 2-leg RingOut call.\nApp Permission\nRingOut\nUsage
+        Plan Group\nHeavy\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n404\nCMN-102\nResource for parameter [ringOutId] is not
+        found"
+      operationId: cancelRingOutCallNew
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidringoutringoutid-delete
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      - in: path
+        name: ringoutId
+        description: Internal identifier of a RingOut call
+      responses:
+        200:
+          description: OK
+      tags:
+      - Cancel
+      - RingOut
+      - Call
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/ringout:
+    post:
+      summary: Make RingOut Call
+      description: "Makes a 2-leg RingOut call.\nApp Permission\nRingOut\nUsage Plan
+        Group\nHeavy\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n400\nCMN-101\nParameter [phoneNumber] value is invalid\n\n\n400\nTEL-107\nCaller
+        ID: [+14152961727] is not allowed\n\n\n400\nTEL-108\nphoneNumber specified
+        in the from field is empty or invalid\n\n\n400\nTEL-109\nphoneNumber specified
+        in the to field is empty or invalid\n\n\n403\nBIL-103\nFeature [RingOut] is
+        not available for current account\n\n\n403\nCMN-112\nFeature [RingOut] is
+        not available for current extension type\n\n\n403\nCMN-113\nFeature [DomesticCalls]
+        is not available for current extension\n\n\n403\nCMN-401\nIn order to call
+        this API endpoint, application needs to have [RingOut] permission\n\n\n403\nRNG-102\nCaller
+        ID should be one of company direct numbers\n\n\n403\nTEL-101\nphoneNumber
+        specified in the to field: [17176704073] is in blocked list\n\n\n403\nTEL-102\nphoneNumber
+        specified in the from field: [17172302150] is in blocked list\n\n\n403\nTEL-107\nCaller
+        ID: [+12094441789] is not allowed\n\n\n404\nCMN-102\nResource for parameter
+        [extensionId] is not found"
+      operationId: makeRingOutCall
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidringout-post
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: body
+        name: body
+        description: JSON body
+        schema:
+          $ref: '#/definitions/holder'
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      responses:
+        200:
+          description: OK
+      tags:
+      - Make
+      - RingOut
+      - Call
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/ringout/{ringoutId}:
+    get:
+      summary: Get Status of RingOut Call
+      description: "Returns status of a 2-leg RingOut call.\nApp Permission\nRingOut\nUsage
+        Plan Group\nLight\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n401\nCMN-405\nLogin to extension required\n\n\n401\nOAU-151\nAuthorization
+        method not supported\n\n\n403\nCMN-401\nIn order to call this API endpoint,
+        application needs to have [RingOut] permission\n\n\n404\nCMN-102\nResource
+        for parameter [extensionId] is not found"
+      operationId: getRingOutCallStatus
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidringoutringoutid-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      - in: path
+        name: ringoutId
+        description: Internal identifier of a RingOut call
+      responses:
+        200:
+          description: OK
+      tags:
+      - Status
+      - Of
+      - RingOut
+      - Call
+    delete:
+      summary: Cancel RingOut Call
+      description: "Cancels a 2-leg RingOut call.\nApp Permission\nRingOut\nUsage
+        Plan Group\nHeavy\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n404\nCMN-102\nResource for parameter [extensionId] is not
+        found"
+      operationId: cancelRingOutCall
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidringoutringoutid-delete
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      - in: path
+        name: ringoutId
+        description: Internal identifier of a RingOut call
+      responses:
+        200:
+          description: OK
+      tags:
+      - Cancel
+      - RingOut
+      - Call
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/address-book/contact:
+    get:
+      summary: Get Contacts
+      description: "Returns user personal contacts.\nApp Permission\nReadContacts\nUser
+        Permission\nReadPersonalContacts\nUsage Plan Group\nHeavy\nError Codes\n\n
+        \n  \n   HTTP Code\n   Error Code\n   Error Message\n   \n \n\n400\nCMN-101\nParameter
+        [perPage] value is invalid\n\n\n401\nCMN-405\nLogin to extension required\n\n\n401\nOAU-151\nAuthorization
+        method not supported\n\n\n403\nCMN-401\nIn order to call this API endpoint,
+        application needs to have [ReadContacts] permission\n\n\n404\nCMN-102\nResource
+        for parameter [accountId] is not found"
+      operationId: listContacts
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidaddressbookcontact-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      - in: query
+        name: page
+        description: Indicates the page number to retrieve
+      - in: query
+        name: perPage
+        description: Indicates the page size (number of items)
+      - in: query
+        name: phoneNumber
+      - in: query
+        name: sortBy
+        description: Sorts results by the specified property
+      - in: query
+        name: startsWith
+        description: If specified, only contacts whose First name or Last name start
+          with the mentioned substring are returned
+      responses:
+        200:
+          description: OK
+      tags:
+      - Contacts
+    post:
+      summary: Create Contact
+      description: "Creates personal user contact.\nApp Permission\nContacts\nUser
+        Permission\nEditPersonalContacts\nUsage Plan Group\nHeavy\nError Codes\n\n
+        \n  \n   HTTP Code\n   Error Code\n   Error Message\n   \n \n\n400\nCMN-101\nParameter
+        [notes] value is invalid\n\n\n400\nPAB-102\nParameter [assistantPhone] is
+        invalid. Failed to parse phone number.\n\n\n400\nPAB-103\nParameter [assistantPhone]
+        is invalid. The phone number is too long.\n\n\n400\nPAB-104\nParameter [assistantPhone]
+        is invalid. The phone numbers starting with the asterisk are not supported.\n\n\n400\nPAB-105\nParameter
+        [assistantPhone] is invalid. The extensions longer than 10 digits are not
+        supported.\n\n\n400\nPAB-106\nParameter [assistantPhone] is invalid. The DTMF
+        sequences longer than 64 digits are not supported.\n\n\n403\nCMN-401\nIn order
+        to call this API endpoint, application needs to have [Contacts] permission\n\n\n403\nCMN-408\nIn
+        order to call this API endpoint, user needs to have [EditPersonalContacts]
+        permission for requested resource.\n\n\n404\nCMN-102\nResource for parameter
+        [accountId] is not found"
+      operationId: createContact
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidaddressbookcontact-post
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: body
+        name: body
+        schema:
+          $ref: '#/definitions/holder'
+      - in: query
+        name: dialingPlan
+        description: A country code value complying with the [ISO 3166-1 alpha-2](https://ru
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      responses:
+        200:
+          description: OK
+      tags:
+      - Contact
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/address-book/contact/{contactId}:
+    get:
+      summary: Get Contact(s) by ID
+      description: "Returns contact(s) by ID(s). Batch request is supported.\nApp
+        Permission\nReadContacts\nUser Permission\nReadPersonalContacts\nUsage Plan
+        Group\nHeavy\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n403\nCMN-401\nIn order to call this API endpoint, application
+        needs to have [ReadContacts] permission\n\n\n404\nCMN-102\nResource for parameter
+        [extensionId] is not found"
+      operationId: loadContact
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidaddressbookcontactcontactid-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: path
+        name: contactId
+        description: Internal identifier of a contact record in the RingCentral database
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      responses:
+        200:
+          description: OK
+      tags:
+      - Contact(s)
+      - By
+      - ID
+    put:
+      summary: Update Contact(s) by ID
+      description: "Updates personal contact information by contact ID(s). Batch request
+        is supported\nApp Permission\nContacts\nUser Permission\nEditPersonalContacts\nUsage
+        Plan Group\nHeavy\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n400\nCMN-101\nParameter [notes] value is invalid\n\n\n403\nCMN-401\nIn
+        order to call this API endpoint, application needs to have [Contacts] permission\n\n\n403\nCMN-408\nIn
+        order to call this API endpoint, user needs to have [EditPersonalContacts]
+        permission for requested resource.\n\n\n404\nCMN-102\nResource for parameter
+        [extensionId] is not found"
+      operationId: updateContact
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidaddressbookcontactcontactid-put
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: body
+        name: body
+        schema:
+          $ref: '#/definitions/holder'
+      - in: path
+        name: contactId
+        description: Internal identifier of a contact record in the RingCentral database
+      - in: query
+        name: dialingPlan
+        description: A country code value complying with the [ISO 3166-1 alpha-2](https://ru
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      responses:
+        200:
+          description: OK
+      tags:
+      - Contact(s)
+      - By
+      - ID
+    delete:
+      summary: Delete Contact(s) by ID
+      description: "Deletes contact(s) by ID(s). Batch request is supported.\nApp
+        Permission\nContacts\nUser Permission\nEditPersonalContacts\nUsage Plan Group\nHeavy\nError
+        Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error Message\n   \n \n\n403\nCMN-401\nIn
+        order to call this API endpoint, application needs to have [Contacts] permission\n\n\n403\nCMN-408\nIn
+        order to call this API endpoint, user needs to have [EditPersonalContacts]
+        permission for requested resource.\n\n\n404\nCMN-102\nResource for parameter
+        [extensionId] is not found"
+      operationId: deleteContact
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidaddressbookcontactcontactid-delete
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: path
+        name: contactId
+        description: Internal identifier of a contact record in the RingCentral database
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      responses:
+        200:
+          description: OK
+      tags:
+      - Contact(s)
+      - By
+      - ID
+  /restapi/v1.0/account/{accountId}/extension/{extensionId}/favorite:
+    get:
+      summary: Get Favorite Contacts
+      description: "Returns favorite contacts of the current extension. Favorite contacts
+        include both company contacts (extensions) and personal contacts (address
+        book records).\nApp Permission\nReadContacts\nUser Permission\nReadPersonalContacts\nUsage
+        Plan Group\nLight\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n403\nCMN-401\nIn order to call this API endpoint, application
+        needs to have [ReadContacts] permission\n\n\n403\nCMN-408\nIn order to call
+        this API endpoint, user needs to have [ReadPersonalContacts] permission for
+        requested resource.\n\n\n404\nCMN-102\nResource for parameter [accountId]
+        is not found"
+      operationId: listFavoriteContacts
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidfavorite-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      responses:
+        200:
+          description: OK
+      tags:
+      - Favorite
+      - Contacts
+    put:
+      summary: Update Favorite Contacts
+      description: "Updates favorite contacts of the current extension. Favorite contacts
+        include both company contacts (extensions) and personal contacts (address
+        book records).**Please note**: currently personal address book size is limited
+        to 10 000 contacts.\nApp Permission\nContacts\nUser Permission\nEditPersonalContacts\nUsage
+        Plan Group\nMedium\nError Codes\n\n \n  \n   HTTP Code\n   Error Code\n   Error
+        Message\n   \n \n\n400\nCMN-101\nParameter [records.extensionId] value is
+        invalid\n\n\n400\nFAV-100\nContact not found\n\n\n400\nFAV-101\nMore than
+        one contact with the same [records.extensionId]\n\n\n400\nFAV-102\n[records.extensionId]
+        and [records.contactId] could not be specified for one contact simultaneously\n\n\n400\nFAV-103\nMore
+        than one contact with the same [records.id]\n\n\n400\nFAV-104\nContact limit
+        exceeded\n\n\n400\nFAV-105\nContact not found in federated directory\n\n\n403\nCMN-401\nIn
+        order to call this API endpoint, application needs to have [Contacts] permission\n\n\n404\nCMN-102\nResource
+        for parameter [accountId] is not found"
+      operationId: updateFavoriteContacts
+      x-api-path-slug: restapiv1-0accountaccountidextensionextensionidfavorite-put
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of a RingCentral account or tilde (~) to
+          indicate the account logged-in within the current session
+      - in: body
+        name: body
+        schema:
+          $ref: '#/definitions/holder'
+      - in: path
+        name: extensionId
+        description: Internal identifier of an extension or tilde (~) to indicate
+          the extension assigned to the account logged-in within the current session
+      responses:
+        200:
+          description: OK
+      tags:
+      - Favorite
+      - Contacts
+  /restapi/v1.0/account/{accountId}/directory/contacts:
+    get:
+      summary: Get Corporate Directory Contacts
+      description: |-
+        Returns contact information on corporate users of federated accounts. Please note: 1. User, DigitalUser, VirtualUser and FaxUser types are returned as User type. 2.ApplicationExtension type is not returned. 3. Only extensions in Enabled, Disabled and NotActivated state are returned.
+        App Permission
+        ReadAccounts
+        Usage Plan Group
+        Medium
+      operationId: listDirectoryContacts
+      x-api-path-slug: restapiv1-0accountaccountiddirectorycontacts-get
+      parameters:
+      - in: path
+        name: accountId
+        description: accountId
+      - in: query
+        name: excludeFederatedContacts
+        description: excludeFederatedContacts
+      - in: header
+        name: If-None-Match
+        description: If-None-Match
+      - in: query
+        name: page
+        description: page
+      - in: query
+        name: perPage
+        description: perPage
+      - in: query
+        name: siteId
+        description: Internal identifier of the business site to which extensions
+          belongs
+      - in: query
+        name: type
+        description: Type of an extension
+      responses:
+        200:
+          description: OK
+      tags:
+      - Corporate
+      - Directory
+      - Contacts
+  /restapi/v1.0/account/{accountId}/directory/contacts/{contactId}:
+    get:
+      summary: Get Corporate Directory Contact
+      description: |-
+        Returns contact information on a particular corporate user of a federated account.
+        App Permission
+        ReadAccounts
+        Usage Plan Group
+        Medium
+      operationId: loadDirectoryContact
+      x-api-path-slug: restapiv1-0accountaccountiddirectorycontactscontactid-get
+      parameters:
+      - in: path
+        name: accountId
+        description: Internal identifier of owning account
+      - in: path
+        name: contactId
+        description: Internal identifier of extension to read information for
+      responses:
+        200:
+          description: OK
+      tags:
+      - Corporate
+      - Directory
+      - Contact
+x-streamrank:
+  polling_total_time_average: 0
+  polling_size_download_average: 0
+  streaming_total_time_average: 0
+  streaming_size_download_average: 0
+  change_yes: 0
+  change_no: 0
+  time_percentage: 0
+  size_percentage: 0
+  change_percentage: 0
+  last_run: ""
+  days_run: 0
+  minute_run: 0
+---
